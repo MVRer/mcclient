@@ -497,8 +497,8 @@ impl World {
 
 /// `n` big-endian longs, as u64.
 fn read_longs(r: &mut Reader, n: usize) -> io::Result<Box<[u64]>> {
-    let bytes = r.take(n * 8)?;
-    Ok(bytes.chunks_exact(8).map(|c| u64::from_be_bytes(c.try_into().unwrap())).collect())
+    let (longs, _) = r.take(n * 8)?.as_chunks::<8>();
+    Ok(longs.iter().map(|c| u64::from_be_bytes(*c)).collect())
 }
 
 fn read_varlong(r: &mut Reader) -> io::Result<i64> {
