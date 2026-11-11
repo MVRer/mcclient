@@ -1,0 +1,30 @@
+[package]
+name = "mcclient"
+version = "0.1.0"
+edition = "2024"
+description = "Lightweight headless Minecraft: Java Edition client with an MCP server, so AI agents can join a server and play (1.21.11 to 26.3)"
+repository = "https://github.com/MVRer/mcclient"
+homepage = "https://github.com/MVRer/mcclient"
+readme = "README.md"
+keywords = ["minecraft", "mcp", "ai-agents", "bot", "headless"]
+categories = ["games", "command-line-utilities", "network-programming"]
+rust-version = "1.88"
+license = "MIT"
+publish = false
+
+[[bin]]
+name = "mcclient"
+path = "src/main.rs"
+
+[dependencies]
+# zlib for the packet compression servers switch on during login (pure-Rust backend).
+flate2 = "1"
+# Offline-mode UUID: Java's UUID.nameUUIDFromBytes is an MD5 (version 3) UUID.
+md-5 = "0.10"
+# The status-ping response, the login-phase disconnect reason and --lang files are JSON.
+serde_json = "1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true
